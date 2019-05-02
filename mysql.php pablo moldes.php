@@ -17,8 +17,8 @@ header('Content-type: text/csv');
     $r1=$conn->query("Select id from mantenimiento where id=(select max(id) from mantenimiento");   //rellenar el interior de las comillas y seguir a partir de aquí.........
     if (strlen(stristr($Consulta,"SELECT"))>0) {                                     
         $idok = '';                                                                    
-        $result->data_seek(0);
-        while($row = $result->fetch_assoc()){
+        $r1->data_seek(0);
+        while($row = $r1->fetch_assoc()){
           foreach ($row as $key => $value) {     
             $idok .= $value.",";
           }
@@ -47,7 +47,7 @@ header('Content-type: text/csv');
         header("HTTP/1.0 400 Bad Request");                                             //sends back a bad request error
         echo "Wrong SQL: " . $query . " Error: " . $conn->error, E_USER_ERROR;          //errors if the query is bad and spits the error back to the client
       } else {
-      echo "FICHA NÚMERO 7 INSERTADA"; //aquí nos podemos estirar un poco y vamos a mandar un html más completo....
+      echo "FICHA NÚMERO ".$idok." INSERTADA"; //aquí nos podemos estirar un poco y vamos a mandar un html más completo....
       
       }
       $conn->close();                                          //closes the DB
